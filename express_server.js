@@ -14,3 +14,13 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
+
+//Adding Routes
+app.get("/urls.json", (req, res) => {
+  res.json(urlDatabase);
+});
+
+// sending HTML
+app.get("/hello", (req, res) => {
+  res.send("<html><body>Hello <b>World</b></body></html>\n");
+});
