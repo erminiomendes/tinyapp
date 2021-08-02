@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/erminiomendes/tinyapp/issues"
   },
-  "homepage": "https://github.com/erminiomendes/tinyapp#readme"
+  "homepage": "https://github.com/erminiomendes/tinyapp#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
