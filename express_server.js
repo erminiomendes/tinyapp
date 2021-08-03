@@ -22,10 +22,6 @@ function generateRandomString() {
   return randomString;
 }
 
-app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}!`);
-});
-
 //Adding Routes
 app.get("/urls.json", (req, res) => {
   res.json(urlDatabase);
@@ -60,7 +56,9 @@ app.post("/urls", (req, res) => {
 });
 
 
-
+app.listen(PORT, () => {
+  console.log(`Example app listening on port ${PORT}!`);
+});
 
 // app.get("/", (req, res) => {
 //   res.send("Hello!");
