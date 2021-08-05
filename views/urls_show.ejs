@@ -19,12 +19,12 @@
             <%= shortURL %>
           </a></p>
       </div>
-      <div class="card-footer text-muted">
+      <div class="card-footer text-muted ">
         <h1>Edit</h1><br>
-        <form class="form-middle" action="/urls/<%= shortURL %>" method="POST">
+        <form class="form-middle"  action="/urls/<%= shortURL %>" method="POST">
 
           <div class="input-group mb-3" style="width: 500px;">
-            <input type="text" class="form-control" placeholder="http://" name="longURLEdit" value="<%= longURL %>" aria-describedby="basic-addon2">
+            <input type="text"  class="form-control" placeholder="http://" name="longURLEdit" value="<%= longURL %>" aria-describedby="basic-addon2">
             <div class="input-group-append">
               <button class="btn btn-outline-secondary" type="submit">Submit</button>
             </div>
