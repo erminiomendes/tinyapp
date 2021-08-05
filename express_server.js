@@ -1,7 +1,7 @@
 const express = require("express");
 const morgan = require('morgan');
-const cookieParser = require('cookie-parser');
-//const cookieSession = require('cookie-session');
+//const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
 const bcrypt = require('bcrypt');
 
 
@@ -13,7 +13,12 @@ const PORT = 8080; // default port 8080
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev'));
 const bodyParser = require("body-parser"); //form via POST é enviado via buffer e parser make readable for us humans
-app.use(cookieParser());
+//app.use(cookieParser());
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2']
+}))
+
 app.set("view engine", "ejs");
 
 // const urlDatabase = {
@@ -89,7 +94,7 @@ app.get("/urls.json", (req, res) => {
 });
 
 app.get("/urls/new", (req, res) => {
-  const user_id = req.cookies.user_id;
+  const user_id = req.session.user_id;
   if (!user_id) {
     res.render("urls_login", { "user": null });
     return;
@@ -103,7 +108,7 @@ app.get("/urls/new", (req, res) => {
 
 //new route handler for "/urls" and use res.render() to pass the URL data to our template.
 app.get("/urls", (req, res) => {
-  const user_id = req.cookies.user_id;
+  const user_id = req.session.user_id;
   const user = users[user_id];
 
   const urlsFromUser = urlsForUser(user_id);
@@ -114,7 +119,7 @@ app.get("/urls", (req, res) => {
 
 //pego parametro(valor) q veio da urls req.params.shortURL
 app.get("/urls/:shortURL", (req, res) => {
-  const user_id = req.cookies.user_id;
+  const user_id = req.session.user_id;
   if (!user_id) {
     res.render("urls_login", { "user": null });
     return;
@@ -137,14 +142,14 @@ app.get("/", (req, res) => {
 app.post("/urls", (req, res) => {
   let newKey = generateRandomString();
   //console.log(req.body.longURL);                  // Log the POST request body to the console
-  const user_ID = req.cookies.user_id;
+  const user_ID = req.session.user_id;
   const longURL = req.body.longURL
   urlDatabase[`${newKey}`] = { longURL, user_ID };  // add newKey and url in urlDatabase
   res.redirect(`/urls/${newKey}`);                 // Redirect to the new
 });
 
 app.post("/urls/:shortURL/delete", (req, res) => {
-  const user_id = req.cookies.user_id;
+  const user_id = req.session.user_id;
   if (urlDatabase[req.params.shortURL].user_ID === user_id) {
     delete urlDatabase[req.params.shortURL]
   }
@@ -154,7 +159,7 @@ app.post("/urls/:shortURL/delete", (req, res) => {
 
 //Recebendo shortURL e longURLEdit update
 app.post("/urls/:shortURL", (req, res) => {
-  const user_id = req.cookies.user_id;
+  const user_id = req.session.user_id;
   if (!(req.body.longURLEdit).includes('http')) {
     req.body.longURLEdit = 'http://' + req.body.longURLEdit;
   }
@@ -181,6 +186,7 @@ app.post("/login", (req, res) => {
     res.status(400).send("e-mail or password is empty")
     return;
   }
+
   const userAux = getUserByEmail(email)
  
   if (!userAux) {
@@ -193,14 +199,17 @@ app.post("/login", (req, res) => {
     return;
   } 
   //res.cookie('email', req.body.email)
-  res.cookie('user_id', userAux.user_id);
+  //res.cookie('user_id', userAux.user_id);
+  req.session.user_id = userAux.user_id;
+
   res.redirect("/urls")
   return;
 
 });
 
 app.post("/logout", (req, res) => {
-  res.clearCookie('user_id', req.cookies.user_id);
+  //res.clearCookie('user_id', req.cookies.user_id);
+  req.session = null;
   res.redirect("/urls");
 });
 
@@ -234,7 +243,8 @@ app.post("/register", (req, res) => {
   const user_id = generateRandomString();
  
   users[user_id] = { user_id, email, hashedPassword };   //create newUser (object)
-  res.cookie('user_id', user_id);                        // Colocando user_id no cookie
+  //res.cookie('user_id', user_id);                        // Colocando user_id no cookie
+  req.session.user_id = user_id;
   res.redirect("/urls")
 });
 
