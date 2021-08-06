@@ -10,37 +10,12 @@
 </head>
 <body>
   <%- include('partials/_header') %>
-  <% if (user) { %>
+
   <main style="margin: 1em;">
-    <h3>My URLs</h3>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Short URL</th>
-          <th scope="col">Long URL</th>
-          <th scope="col">Edit</th>
-          <th scope="col">Delete</th>
-          
-        </tr>
-      </thead>
-      <tbody>
-        <% for(let url in urls) { %>
-            
-          <tr>
-            <td><a href="/u/<%= urls[url].shortURL %>"><%= urls[url].shortURL %></a></td>
-            <td><%= urls[url].longURL %></td>
-            <td><form method="GET" action="/urls/<%= urls[url].shortURL %>/"><button class="btn btn-outline-secondary" type="submit">Edit</button></form></td>
-            <td><form method="POST" action="/urls/<%= urls[url].shortURL %>/delete"><button class="btn btn-outline-danger">Delete</button></form></td>
-            
-          </tr>
-          
-        <% } %>
-        
-      </tbody>
-    </table>
-    <% } else { %> 
-      <h3>Hi welcome to TinyAPP 😀 Please <a href='/register'>register</a> or <a href='/login'>log first</a></h3>
-    <%}%>
+    <h3>Sorry 🙁</h3>
+    <p> <%= message %> </p>
+ 
+
   </main>
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
