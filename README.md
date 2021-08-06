@@ -4,11 +4,11 @@ TinyApp is a full stack web application built with Node and Express that allows 
 
 ## Final Product
 
-![Getting Started](./docs/login_page.png)
+![Getting Started](https://raw.githubusercontent.com/erminiomendes/tinyapp/master/docs/login_page.png)
 
-![Getting Started](./docs/urls_page.png)
+![Getting Started](https://raw.githubusercontent.com/erminiomendes/tinyapp/master/docs/urls_page.png)
 
-![Getting Started](./docs/edit_page.png)
+![Getting Started](https://raw.githubusercontent.com/erminiomendes/tinyapp/master/docs/edit_page.png)
 
 ## Dependencies
 
